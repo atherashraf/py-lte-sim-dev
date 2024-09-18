@@ -3,6 +3,7 @@
 
 
 # Import the .pxd definitions
+cimport lte_sim_wrapper
 from lte_sim_wrapper cimport  NetworkNode, Packet, Simulator, Application
 from lte_sim_wrapper cimport  RadioBearer, DL_MLWDF_PacketScheduler
 
@@ -353,6 +354,7 @@ cdef class PyDLMLWDFPacketScheduler:
             self.thisptr.DoSchedule()  # Call the C++ DoSchedule method
 
     def compute_scheduling_metric(self, PyRadioBearer bearer, double spectral_efficiency, int sub_channel):
+        print("Calling overridden compute_scheduling_metric in Python")
         if self.thisptr and bearer.thisptr:
             return self.thisptr.ComputeSchedulingMetric(bearer.thisptr, spectral_efficiency, sub_channel)
         else:
@@ -381,6 +383,7 @@ cdef class PySimulator:
         Start or resume the simulation.
         """
         self.c_simulator.Run()
+        # pass
 
     def stop(self):
         """
@@ -399,3 +402,15 @@ cdef class PySimulator:
         Return the unique identifier for the simulator instance.
         """
         return self.c_simulator.GetUID()
+
+
+
+def run_single_cell_with_interference(int nbCells, double radius, int nbUE, int nbVoIP, int nbVideo, int nbBE, int nbCBR,
+                                      int sched_type, int frame_struct, int speed, double maxDelay, int videoBitRate, int seed):
+    """
+    Wrapper for the SingleCellWithInterference function from the C++ library.
+    Exposes the functionality to Python.
+    """
+    print("Working on single cell with interference")
+    lte_sim_wrapper.SingleCellWithInterference(nbCells, radius, nbUE, nbVoIP, nbVideo, nbBE, nbCBR,
+                                               sched_type, frame_struct, speed, maxDelay, videoBitRate, seed)

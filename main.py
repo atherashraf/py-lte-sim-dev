@@ -2,27 +2,16 @@ import os
 
 import lte_sim_wrapper
 
+
 # Assuming there's a class or function called `LteSimulator` in your pyx file
 def simulate_lte_example():
-    # Instantiate the LTE simulator
-    simulator = lte_sim_wrapper.LteSimulator()
+    lte_sim_wrapper.run_single_cell_with_interference(nbCells=1, radius=1, nbUE=100, nbVoIP=1,
+                                                      nbVideo=1, nbBE=0, nbCBR=1,
+                                                      sched_type=2, frame_struct=1, speed=3, maxDelay=0.1,
+                                                      videoBitRate=242, seed=1)
 
-    # Set up parameters for the LTE simulation, assuming the pyx file has methods to configure the simulation
-    simulator.set_parameters(frequency_band=1800, bandwidth=20, num_users=100)
-
-    # Run the simulation
-    simulator.run_simulation()
-
-    # Retrieve results
-    throughput = simulator.get_throughput()
-    latency = simulator.get_latency()
-
-    # Display the results
-    print(f"Simulation Results:\nThroughput: {throughput} Mbps\nLatency: {latency} ms")
 
 def list_folder_and_cpp_cc_files():
-
-
     # Path to your source folder
     base_folder = '/Users/atherashraf/PycharmProjects/PhDStudents/py-lte-sim-dev'
     src_folder = os.path.join(base_folder, 'lte-sim-dev/src')

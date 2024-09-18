@@ -197,3 +197,9 @@ cdef extern from "lte-sim-dev/src/core/eventScheduler/simulator.h":
         int GetUID()
 
         Simulator * get_instance()
+
+# Declare the SingleCellWithInterference function from the header file
+cdef extern from "lte-sim-dev/src/scenarios/single-cell-with-interference.h":
+    void SingleCellWithInterference(int nbCells, double radius, int nbUE, int nbVoIP, int nbVideo, int nbBE, int nbCBR,
+                                    int sched_type, int frame_struct, int speed, double maxDelay, int videoBitRate,
+                                    int seed)
